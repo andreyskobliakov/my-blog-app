@@ -1,2 +1,2 @@
 # my-blog-app
-Project Vue
+Project Vue 12/08/2023
