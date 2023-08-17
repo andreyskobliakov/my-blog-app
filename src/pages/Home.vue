@@ -38,9 +38,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
-import Header from '../components/Header.vue';
 import PostCard from '../components/PostCard.vue';
-import Footer from '../components/Footer.vue';
 import SearchBar from '../components/SearchBar.vue';
 
 const posts = ref([]);

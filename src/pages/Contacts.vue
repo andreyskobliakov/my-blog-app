@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import Header from '../components/Header.vue';
 import ContactForm from '../components/ContactForm.vue';
 </script>
 

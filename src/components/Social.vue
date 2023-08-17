@@ -1,10 +1,17 @@
 <template>
-    <div class="text-center">
+  <div class="text-center">
+    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
       <font-awesome-icon :icon="['fab', 'facebook']" class="bg-blue-400 text-white p-2 m-1 w-5 h-5"></font-awesome-icon>
+    </a>
+    <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
       <font-awesome-icon :icon="['fab', 'youtube']" class="bg-red-500 text-white p-2 m-1 w-5 h-5"></font-awesome-icon>
+    </a>
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
       <font-awesome-icon :icon="['fab', 'instagram']" class="bg-blue-400 text-white p-2 m-1 w-5 h-5"></font-awesome-icon>
-    </div>
-  </template>
+    </a>
+  </div>
+</template>
+
   
   <script>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
