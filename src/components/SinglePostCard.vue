@@ -31,71 +31,19 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import axios from 'axios';
+import { useSinglePost } from '../composition/useSinglePost.js';
 import AddCommentForm from './AddCommentsForm.vue';
 import Button from './Button.vue';
 
-const route = useRoute();
-const postId = ref(route.params.id);
-const post = ref({ image: '' });
-const comments = ref([]);
-const isLoadingComments = ref(true);
+const { post, comments, isLoadingComments, fetchComments, fetchImage, deleteComment, handleCommentAdded } = useSinglePost();
 
 onMounted(async () => {
-  const [postResponse] = await Promise.all([
-    axios.get(`https://jsonplaceholder.typicode.com/posts/${postId.value}`),
-  ]);
-
-  post.value = postResponse.data;
-
   await fetchComments();
   await fetchImage();
   isLoadingComments.value = false;
 });
 
-const fetchComments = async () => {
-  try {
-    const commentsResponse = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId.value}`);
-    comments.value = commentsResponse.data.slice(0, 5);
-  } catch (error) {
-    console.error('Помилка під час отримання комментарів:', error);
-  }
-};
-
-const handleCommentAdded = (newComment) => {
-  comments.value.push(newComment);
-};
-
-const deleteComment = (commentId) => {
-  const commentIndex = comments.value.findIndex(
-    (comment) => comment.id === commentId
-  );
-  if (commentIndex !== -1) {
-    comments.value.splice(commentIndex, 1);
-  }
-};
-
-const fetchImage = async () => {
-  try {
-    const response = await fetch(`https://source.unsplash.com/400x300/?random=${postId.value}`);
-    if (response.ok) {
-      post.value.image = response.url;
-    } else {
-      console.error('Помилка під час отримання зображення');
-    }
-  } catch (error) {
-    console.error('Помилка під час отримання зображення:', error);
-  }
-};
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleString();
-};
-
 </script>
 
 <style scoped>
-/* Стилі для компонента */
 </style>

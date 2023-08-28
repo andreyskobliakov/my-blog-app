@@ -7,11 +7,22 @@
           <div>
             <h3 class="text-lg font-semibold text-text-color mb-5 md:mb-0 md:text-left">Загальні посилання</h3>
           </div>
+          <!-- Добавьте свои общие ссылки здесь -->
         </div>
 
         <!-- Теми блога -->
         <div class="text-center md:text-left">
-          <h3 class="text-lg font-semibold text-text-color">ТЕМИ БЛОГА</h3>
+          <h3 class="text-lg font-semibold text-text-color mb-5">ТЕМИ БЛОГА</h3>
+          <ul class="list-none p-0">
+            <li v-for="category in categories" :key="category.id">
+              <a
+                :href="`/categories/${category.id}`"
+                class="text-text-color hover:text-white"
+              >
+                {{ category.name }}
+              </a>
+            </li>
+          </ul>
         </div>
 
         <!-- Зв'язок з нами и социальные сети -->
@@ -30,6 +41,7 @@
             <Social class="mt-2" />
           </div>
           <div>
+            <!-- Добавьте другой контент для связи с нами -->
           </div>
         </div>
       </div>
@@ -44,9 +56,26 @@ import Social from '../components/Social.vue';
 export default {
   components: {
     Social
+  },
+  setup() {
+    const categories = ref([
+      // Замените этот список на свои категории
+      { id: 1, name: 'First Child Category' },
+      { id: 2, name: 'One Grandchild Category' },
+      { id: 3, name: 'Parent' },
+      { id: 4, name: 'Second Child Category' },
+      { id: 5, name: 'Uncategorized' }
+      
+      // ... добавьте остальные категории
+    ]);
+
+    return {
+      categories
+    };
   }
 };
 </script>
 
 <style scoped>
+/* Ваши стили для футера могут быть добавлены здесь */
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mt-20">
+  <div class="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mt-20 mb-20">
     <h2 class="text-2xl font-semibold mb-4">Форма зворотнього зв'язку</h2>
     <form @submit.prevent="submitForm" class="space-y-4">
       <div class="mb-4">

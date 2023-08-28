@@ -5,19 +5,17 @@ export function usePostData(postId) {
   const post = ref({ image: '', rating: 0 });
   const authorName = ref('');
   const formattedDate = ref('');
-  const comments = ref([]);
-  const isLoadingComments = ref(true);
 
-  const fetchPost = async () => {
+  const fetchImage = async () => {
     try {
-      const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId.value}`);
-      if (response.status === 200) {
-        post.value = response.data;
+      const response = await fetch(`https://source.unsplash.com/400x300/?random=${postId}`);
+      if (response.ok) {
+        post.value.image = response.url;
       } else {
-        console.error('Помилка під час отримання поста');
+        console.error('Ошибка при получении изображения');
       }
     } catch (error) {
-      console.error('Помилка під час отримання поста:', error);
+      console.error('Ошибка при получении изображения:', error);
     }
   };
 
@@ -28,56 +26,28 @@ export function usePostData(postId) {
         const authorData = response.data;
         authorName.value = authorData.name;
       } else {
-        console.error('Помилка під час отримання автора');
+        console.error('Ошибка при получении данных об авторе');
       }
     } catch (error) {
-      console.error('Помилка під час отримання автора:', error);
+      console.error('Ошибка при получении данных об авторе:', error);
     }
   };
 
-  const fetchImage = async () => {
-    try {
-      const response = await fetch(`https://source.unsplash.com/400x300/?random=${post.value.id}`);
-      if (response.ok) {
-        post.value.image = response.url;
-      } else {
-        console.error('Помилка під час отримання зображення');
-      }
-    } catch (error) {
-      console.error('Помилка під час отримання зображення:', error);
-    }
-  };
-
-  const fetchComments = async () => {
-    try {
-      const response = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId.value}`);
-      if (response.status === 200) {
-        comments.value = response.data.slice(0, 5);
-        isLoadingComments.value = false;
-      } else {
-        console.error('Помилка під час отримання коментарів');
-      }
-    } catch (error) {
-      console.error('Помилка під час отримання коментарів:', error);
-    }
+  const shortenTitle = (title) => {
+    const words = title.split(' ');
+    return words.slice(0, 4).join(' ');
   };
 
   onMounted(async () => {
-    await fetchPost();
     await fetchAuthor();
-    await fetchImage();
-    await fetchComments();
+    await fetchImage(); // Вызываем fetchImage после fetchAuthor
   });
 
   return {
     post,
     authorName,
     formattedDate,
-    comments,
-    isLoadingComments,
-    fetchPost,
-    fetchAuthor,
-    fetchImage,
-    fetchComments
+    shortenTitle,
+    fetchAuthor
   };
 }

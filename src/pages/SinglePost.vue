@@ -1,30 +1,27 @@
 <template>
-  <div>
-    <Header/>
-    <div class="p-4">
-      <SinglePostCard :post="post" :comments="comments" />
-    </div>
-  </div>
+  <Layout>
+    <template v-slot:header>
+      <Header />
+    </template>
+
+    <template v-slot:default>
+      <div class="p-4">
+        <SinglePostCard :post="post" :comments="comments" />
+      </div>
+    </template>
+
+    <template v-slot:footer>
+      <footer />
+    </template>
+  </Layout>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
 import SinglePostCard from '../components/SinglePostCard.vue';
+import { useSinglePost } from '../composition/useSinglePost.js';
 
 const route = useRoute();
-const postId = ref(route.params.id);
-const post = ref({});
-const comments = ref([]);
-
-onMounted(async () => {
-  const [postResponse, commentsResponse] = await Promise.all([
-    axios.get(`https://jsonplaceholder.typicode.com/posts/${postId.value}`),
-    axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId.value}`)
-  ]);
-
-  post.value = postResponse.data;
-  comments.value = commentsResponse.data.slice(0, 5);
-});
+const postId = route.params.id;
+const { post, comments } = useSinglePost(postId);
 </script>
